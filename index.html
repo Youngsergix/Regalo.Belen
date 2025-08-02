@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tocadiscos Cumpleañero</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .regalo {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      background: #c89feb;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .cinta-vertical, .cinta-horizontal {
+      position: absolute;
+      background: #a16acb;
+    }
+
+    .cinta-vertical {
+      width: 10px;
+      height: 100%;
+      left: 35px;
+      top: 0;
+    }
+
+    .cinta-horizontal {
+      width: 100%;
+      height: 10px;
+      top: 35px;
+      left: 0;
+    }
+
+    .moño {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #a16acb;
+      border-radius: 50%;
+      top: -10px;
+    }
+
+    .moño.izquierda {
+      left: 15px;
+    }
+
+    .moño.derecha {
+      right: 15px;
+    }
+
+    .carta {
+      display: none;
+      position: absolute;
+      top: 20%;
+      background: #fff;
+      color: #000;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      text-align: center;
+      max-width: 80%;
+      z-index: 10;
+      font-family: 'Georgia', serif;
+    }
+
+    .carta strong {
+      font-size: 1.2em;
+    }
+
+    .confeti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: pink;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 1;
+      animation: explotar 5s ease-out forwards;
+    }
+
+    @keyframes explotar {
+      to {
+        transform: translate(var(--x), var(--y)) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .tocadiscos {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      background: #222;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease;
+      margin-bottom: 20px;
+    }
+
+    .tocadiscos:hover {
+      transform: scale(1.03);
+    }
+
+    .disco {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      background: radial-gradient(circle at center,
+        #000 0%, #111 5%, #222 10%, #87ceeb 60%, #000 62%, #111 80%, #000 100%);
+      border-radius: 50%;
+      border: 4px solid #000;
+      animation: girar 4s linear infinite;
+      z-index: 1;
+    }
+
+    .disco::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px;
+      background: #333;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .texto-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      z-index: 3;
+      pointer-events: none;
+      animation: girar 4s linear infinite;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    text {
+      fill: #000;
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 14px;
+      text-shadow: 1px 1px 1px #fff;
+      letter-spacing: 2px;
+    }
+
+    .brazo {
+      position: absolute;
+      top: 85px;
+      left: 180px;
+      width: 75px;
+      height: 6px;
+      background: #aaa;
+      transform-origin: left center;
+      transform: rotate(35deg);
+      z-index: 2;
+      border-radius: 4px;
+    }
+
+    .brazo::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: -5px;
+      width: 12px;
+      height: 18px;
+      background: #666;
+      border-radius: 4px;
+    }
+
+    @keyframes girar {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="regalo" id="regalo">
+    <div class="cinta-vertical"></div>
+    <div class="cinta-horizontal"></div>
+    <div class="moño izquierda"></div>
+    <div class="moño derecha"></div>
+  </div>
+
+  <div class="carta" id="carta">
+    <strong>Feliz Cumpleaños</strong><br><br>
+    𝑯𝒐𝒚 𝒏𝒐 𝒕𝒖𝒗𝒆 𝒍𝒂 𝒔𝒖𝒆𝒓𝒕𝒆 𝒅𝒆 𝒑𝒐𝒅𝒆𝒓 𝒗𝒆𝒓 𝒕𝒖 lindo 𝒓𝒐𝒔𝒕𝒓𝒐,<br>
+    𝒑𝒆𝒓𝒐 𝒔é 𝒄𝒐𝒏 𝒈𝒓𝒂𝒏 𝒄𝒆𝒓𝒕𝒆𝒛𝒂 𝒒𝒖𝒆 𝒕𝒆 𝒗𝒆í𝒂𝒔 𝒉𝒆𝒓𝒎𝒐𝒔𝒂,<br>
+    𝒆𝒔𝒐 𝒏𝒐 𝒍𝒐 𝒑𝒖𝒆𝒅𝒐 𝒅𝒖𝒅𝒂𝒓,<br>
+    𝒕𝒆 𝒒𝒖𝒊𝒆𝒓𝒐 𝒅𝒆𝒎𝒂𝒔𝒊𝒂𝒅𝒐.
+  </div>
+
+  <a href="https://www.youtube.com/watch?v=Ghywp7i032A&list=RDGhywp7i032A&start_radio=1" target="_blank">
+    <div class="tocadiscos">
+      <div class="disco"></div>
+      <div class="texto-svg">
+        <svg viewBox="0 0 150 150">
+          <defs>
+            <path id="curvaAzul" d="M75,75 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
+          </defs>
+          <text>
+            <textPath xlink:href="#curvaAzul" startOffset="22%">
+              𝕰𝖘𝖈𝖚𝖈𝖍𝖆𝖒𝖊
+            </textPath>
+          </text>
+        </svg>
+      </div>
+      <div class="brazo"></div>
+    </div>
+  </a>
+
+  <script>
+    const regalo = document.getElementById('regalo');
+    const carta = document.getElementById('carta');
+
+    regalo.addEventListener('click', () => {
+      for (let i = 0; i < 120; i++) {
+        const confeti = document.createElement('div');
+        confeti.className = 'confeti';
+        confeti.style.left = (regalo.offsetLeft + 40) + 'px';
+        confeti.style.top = (regalo.offsetTop + 40) + 'px';
+
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = Math.random() * 300 + 50;
+        confeti.style.setProperty('--x', `${Math.cos(angle) * radius}px`);
+        confeti.style.setProperty('--y', `${Math.sin(angle) * radius}px`);
+
+        confeti.style.background = `hsl(${Math.random() * 360}, 70%, 80%)`;
+        document.body.appendChild(confeti);
+
+        setTimeout(() => confeti.remove(), 5000);
+      }
+
+      regalo.style.display = 'none';
+      carta.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
